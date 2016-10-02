@@ -44,6 +44,32 @@ class Submit(object):
             return False 
         print ' login successful'
         return True 
+	def Submit(self, Proid, Language, Code):
+        if not self.Login():
+            return ['Judge Error', '', '']
+        Proid = Proid.encode('utf-8')
+        Language = self.map()[Language]
+        PostData = {'Proid': Proid,
+                    'Language': Language,
+                    'Source': Code} 
+        PostData = urllib.urlencode(PostData)
+        request = urllib2.Request(self.SubmitAdd, PostData, self.header)
+        try:
+            response = urllib2.urlopen(request, timeout=10)
+        except:
+            return ['Submit Failed', '', '']
+        if response.getcode() != 200 :
+            print 'Submmit Error'
+            return ['Submit Failed', '', '']
+        print 'Subbmit Done!'
+        time.sleep(3) 
+        ans = self.QueryStatus()
+        print ans[0]
+        while ans[0] in self.WaitingStatus: 
+            time.sleep(1)
+            ans = self.QueryStatus()
+        print ans
+        return ans
 
 if __name__ == '__main__':
     fin = open('a.txt', 'r')
