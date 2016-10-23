@@ -44,7 +44,38 @@ class Submit(object):
             return False 
         print ' login successful'
         return True 
-	def Submit(self, Proid, Language, Code):
+    def QueryStatus(self):
+        postData = {'author' : self.username} 
+        postData = urllib.urlencode(postData)
+        request = urllib2.Request(self.StatusAdd + '?' + postData, headers=self.header)
+        try:
+            response = urllib2.urlopen(request, timeout=10)
+        except:
+            print 'Sorry Query Error'
+            return ['Judge Error', '', '', '']
+        if response.getcode() != 200:
+            print 'Sorry Query Error'
+            return ['Judge Error', '', '', '']
+        Page = response.read()
+        self.Html(Page)
+        res = Page.split('<tbody>')[2].split('</tbody>')[0]
+        rec = res.split('</tr>')[0]
+        rec = re.findall(r'<td(.*?)</td>', rec)
+        Result = rec[2].split('>')[1]
+        if 'http' in Result:
+            Result = 'Compilation Error'
+        Time = rec[3].split('>')[1]
+        Memory = rec[4].split('>')[1]
+        Codelength = rec[6].split('>')[1]
+        return [Result, Time, Memory, Codelength] 
+    
+    def map(self):
+        ans = {'C++' : 'C++',
+               'C89' : 'C89',
+               'Java' : 'Java',}
+        return ans 
+    
+    def Submit(self, Proid, Language, Code):
         if not self.Login():
             return ['Judge Error', '', '']
         Proid = Proid.encode('utf-8')
