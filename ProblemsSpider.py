@@ -59,6 +59,63 @@ class HojSpider(object):
 				  'sample_input' : sample_input,
 				  'sample_output' : sample_output}
         print problem 
+	def QueryStatus(self):
+        postData = {'author' : self.username} 
+        postData = urllib.urlencode(postData)
+        request = urllib2.Request(self.StatusAdd + '?' + postData, headers=self.header)
+        try:
+            response = urllib2.urlopen(request, timeout=10)
+        except:
+            print 'Sorry Query Error'
+            return ['Judge Error', '', '', '']
+        if response.getcode() != 200:
+            print 'Sorry Query Error'
+            return ['Judge Error', '', '', '']
+        Page = response.read()
+        self.Html(Page)
+        res = Page.split('<tbody>')[2].split('</tbody>')[0]
+        rec = res.split('</tr>')[0]
+        rec = re.findall(r'<td(.*?)</td>', rec)
+        Result = rec[2].split('>')[1]
+        if 'http' in Result:
+            Result = 'Compilation Error'
+        Time = rec[3].split('>')[1]
+        Memory = rec[4].split('>')[1]
+        Codelength = rec[6].split('>')[1]
+        return [Result, Time, Memory, Codelength] 
+    
+    def map(self):
+        ans = {'C++' : 'C++',
+               'C89' : 'C89',
+               'Java' : 'Java',}
+        return ans 
+    
+    def Submit(self, Proid, Language, Code):
+        if not self.Login():
+            return ['Judge Error', '', '']
+        Proid = Proid.encode('utf-8')
+        Language = self.map()[Language]
+        PostData = {'Proid': Proid,
+                    'Language': Language,
+                    'Source': Code} 
+        PostData = urllib.urlencode(PostData)
+        request = urllib2.Request(self.SubmitAdd, PostData, self.header)
+        try:
+            response = urllib2.urlopen(request, timeout=10)
+        except:
+            return ['Submit Failed', '', '']
+        if response.getcode() != 200 :
+            print 'Submmit Error'
+            return ['Submit Failed', '', '']
+        print 'Subbmit Done!'
+        time.sleep(3) 
+        ans = self.QueryStatus()
+        print ans[0]
+        while ans[0] in self.WaitingStatus: 
+            time.sleep(1)
+            ans = self.QueryStatus()
+        print ans
+        return ans
 		
 if __name__ == '__main__':
 	HojSpider().Allpages()
