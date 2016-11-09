@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IndigoOJ</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+        <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+<body>
+
+<div class="container">
+    <div class="row clearfix">
+        <div class="col-md-12 column">
+        <a href = "{% url 'OJ:problemset' %}">Problems</a>
+
+<a href = "{% url 'OJ:statuslist' %}">Status</a>
+
+{% if uid != '' %}
+    <h1>Welcome {{account}} !</h1>
+    <a href = "{% url 'OJ:logout' %}">注销</a>
+{% else %}
+    <a href = "{% url 'OJ:login' %}">登陆</a>
+<a href = "{% url 'OJ:register' %}">注册</a>
+{% endif %}
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>
