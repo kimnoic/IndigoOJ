@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IndigoOJ</title>
+
+        <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+        <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+
+<table>
+	<thead>
+		<tr>
+			<th>rid</th>
+			<th>Problem</th>
+			<th>ProblemID</th>
+			<th>Status</th>
+			<th>Time</th>
+			<th>Memory</th>
+			<th>Language</th>
+			<th>CodeLength</th>
+			<th>User</th>
+			<th>Subtime</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for status in statuslist %}
+		<tr>
+			<td>{{ status.id }}</td>
+			<td><a href = "{% url 'OJ:problem' status.problem.id %}">{{ status.problem.title }}</a></td>
+			<td>{{ status.problem.id }}</td>
+			<td>{{ status.status }}</td>
+			<td>{{ status.time }} ms</td>
+			<td>{{ status.mem }} K</td>
+			<td>{{ status.lan }}</td>
+			<td>{{ status.codelength }} B</td>
+			<td>{{ status.user.accountname }}</td>
+			<td>{{ status.subtime }}</td>
+		</tr>
+		{% endfor %}
+	</tbody>
+</table>
+
+</html>

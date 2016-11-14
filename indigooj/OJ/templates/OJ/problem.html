@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>IndigoOJ</title>
+
+        <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+        <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+<p>{{ problem.title }}</p>
+<p>Time Limit:{{ problem.time_limit }}	Memory Limit:{{ problem.mem_limit }}</p>
+<p>detail:</p>
+<pre>{{ problem.detail }}</pre>
+<p>Sample input</p>
+<p>{{ problem.sampleinput}}</p>
+<p>Sample output</p>
+<p>{{ problem.sampleoutput}}</p>
+{% if problem.sample != '' %}
+<p>Sample</p>
+<pre>{{ problem.sample }}</pre>
+{% endif %}
+
+<form action="{% url 'OJ:problem' problem.id %}" method="post">
+	<table>
+    	{% csrf_token %}
+    	{{ form }}
+	</table>
+	<input type="submit" value="提交" />
+</form>
+</html>
