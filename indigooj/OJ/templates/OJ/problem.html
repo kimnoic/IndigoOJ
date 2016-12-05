@@ -9,24 +9,75 @@
 
         <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
-<p>{{ problem.title }}</p>
-<p>Time Limit:{{ problem.time_limit }}	Memory Limit:{{ problem.mem_limit }}</p>
+<body>
+        <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
+<div class="container">
+  <div class="navbar-header">
+    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="sr-only">Menu</span>
+        <span class="glyphicon glyphicon-th-list"></span>
+    </button>
+    <a class="navbar-brand" href="#">IndigoOJ</a>
+
+</div>
+<div id="navbar" class="navbar-collapse collapse">
+    <ul class="nav navbar-nav">
+        <li class="active">
+            <a href="#">主页</a>
+        </li>
+        <li>
+            <a href="{% url 'OJ:problemset'%}">Problems</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+    {% if uid != '' %}
+    <li>
+    <a >Welcome {{account}} !</a>
+    </li>
+    <li>
+    <a href = "{% url 'OJ:logout' %}"><span class="glyphicon glyphicon-log-out"></span> 注销</a>
+    </li>
+    {% else %}
+    <li>
+    <a href = "{% url 'OJ:login' %}"><span class="glyphicon glyphicon-log-in"></span> 登录</a>
+    </li>
+    <li>
+        <a href = "{% url 'OJ:register' %}"><span class="glyphicon glyphicon-user"></span> 注册</a>
+    </li>
+        {% endif %}
+    </ul>
+</div>
+</div>   
+</nav>
+
+<div class="container" style="padding-top:50px;">
+
+    <p>{{ problem.title }}</p>
+<p>Time Limit:{{ problem.time_limit }}  Memory Limit:{{ problem.mem_limit }}</p>
 <p>detail:</p>
 <pre>{{ problem.detail }}</pre>
 <p>Sample input</p>
-<p>{{ problem.sampleinput}}</p>
+{% autoescape off %}
+<pre>{{ problem.sampleinput}}</pre>
+{% endautoescape %}
 <p>Sample output</p>
-<p>{{ problem.sampleoutput}}</p>
+<pre>{{ problem.sampleoutput}}</pre>
 {% if problem.sample != '' %}
 <p>Sample</p>
 <pre>{{ problem.sample }}</pre>
 {% endif %}
 
 <form action="{% url 'OJ:problem' problem.id %}" method="post">
-	<table>
-    	{% csrf_token %}
-    	{{ form }}
-	</table>
-	<input type="submit" value="提交" />
+    <table>
+        {% csrf_token %}
+        {{ form }}
+    </table>
+    <input type="submit" value="提交" />
 </form>
+
+
+</div>
+
+</body>
+
 </html>

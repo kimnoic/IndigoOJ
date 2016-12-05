@@ -4,6 +4,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from OJ.models import *
 from OJ.OJcore import HojControl
+from OJ.User.UserSession import sessionGetUserInfo
 from django import forms
 
 def trim(s):
@@ -26,7 +27,7 @@ class SubmitForm(forms.Form):
 			('C89','C89'),
 			('Java','Java'),
 		))
-	code = forms.CharField(widget = forms.Textarea,max_length = 2000)
+	code = forms.CharField(widget = forms.Textarea(attrs={"class":"","placeholder":"在这里输入"}),max_length = 2000)
 
 
 def problemset(request):
@@ -40,6 +41,7 @@ def problemset(request):
 
 	problem_list = []
 	a = Problem.objects.all()
+	lastpage = a.count()/50
 	l = a[50*eval(page)-50:50*eval(page)]
 
 	for i in l:
@@ -56,13 +58,17 @@ def problemset(request):
 		else:
 			ratio_on_oringin = '0';
 
+		uid=sessionGetUserInfo(request)["uid"]
+		account=sessionGetUserInfo(request)["account"]
+
+
 		dic = {'oj':i.oj.name,'number':i.number,'submitted':i.submitted,'accepted':i.accepted,
 				'submitted_on_oringin':i.submitted_on_oringin,'accepted_on_oringin':i.accepted_on_oringin,
 				'ratio_on_oringin':ratio_on_oringin,'ratio':ratio,'id':i.id, 'title':trim2(i.title)}
 		problem_list.append(dic)
 
 
-	return render(request,"OJ/problemset.html",{'page':page,'problem_list':problem_list})
+	return render(request,"OJ/problemset.html",{'page':page,'problem_list':problem_list,'lastpage':lastpage,"uid":uid,"account":account})
 
 def problem(request,id):
 	try:
@@ -74,6 +80,10 @@ def problem(request,id):
 		i = Problem.objects.get(pk=id)
 	except Problem.DoesNotExist:
 		return HttpResponseRedirect(refer)
+
+
+	uid=sessionGetUserInfo(request)["uid"]
+	account=sessionGetUserInfo(request)["account"]
 
 	if(i.submitted != 0):
 		ratio = str(i.accepted*100.0/i.submitted)[:5]
@@ -96,13 +106,6 @@ def problem(request,id):
 
 	if request.method == "POST":
 		form = SubmitForm(request.POST)
-		try:
-			uid = request.session['uid']
-			account = request.session['accountname']
-		except KeyError:
-			uid = ''
-			account = ''
-		
 		if form.is_valid():
 			if uid=='':
 				msg = u'请先登陆'
@@ -123,9 +126,11 @@ def problem(request,id):
 		else:
 			return render(request,"OJ/problem.html",{'problem':dic,'form':form})
 	else:
-		form = SubmitForm({'number':i.number,'id':i.id,'lan':'C++','code':'在这里输入'})
+		form = SubmitForm({'number':i.number,'id':i.id,'lan':'C++','code':''})
 
-	return render(request,"OJ/problem.html",{'problem':dic,'form':form})
+
+
+	return render(request,"OJ/problem.html",{'problem':dic,'form':form,'uid':uid,'account':account})
 
 
 

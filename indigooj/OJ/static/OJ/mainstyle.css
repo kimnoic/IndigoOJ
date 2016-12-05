@@ -1,0 +1,25 @@
+#top{
+	background-color: rgb(43,46,118);
+
+}
+#top a{
+	color: WHITE;
+}
+#top span{
+	color:WHITE;
+}
+header{
+	min-height: 600px;
+	background: linear-gradient(rgba(0,0,0,0.5),rgba(0,0,0,0.5)),url('../OJ/Sunset-in-Indigo.jpg');
+}
+header .intro{
+	font-family: "微软雅黑";
+	padding-top: 200px;
+	font-size: 40px;
+	color:WHITE;
+
+}
+header .welcome{
+	font-weight: thin;
+	font-size: 20px;
+}
