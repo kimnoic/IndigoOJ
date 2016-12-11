@@ -9,11 +9,26 @@
 
         <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
-<form action="{% url 'OJ:login' %}" method="post">
-	<table>
-    	{% csrf_token %}
-    	{{ form.as_table }}
-	</table>
-	<input type="submit" value="提交" />
+<body>
+{% include "OJ/navbar.html" %}
+<div class="container" style="padding-top:100px">
+    <form role="form" action="{% url 'OJ:login' %}" method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="" class="control-label">用户名</label>
+            {{ form.username }}
+        </div>
+        <div class="form-group">
+            <label for="" class="control-label">密码</label>
+            {{ form.password }}
+        </div>
+
+        {# {{ form.as_table }} #}
+
+
+    <button type="submit" class="btn btn-primary">
+    Submit</button>
 </form>
+</div>
+</body>
 </html>

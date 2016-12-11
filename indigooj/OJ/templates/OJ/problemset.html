@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>IndigoOJ</title>
+        <title>Problems - IndigoOJ</title>
 
         <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
@@ -10,58 +10,20 @@
         <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
 <body>
-	<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-<div class="container">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Menu</span>
-        <span class="glyphicon glyphicon-th-list"></span>
-    </button>
-    <a class="navbar-brand" href="#">IndigoOJ</a>
-
-</div>
-<div id="navbar" class="navbar-collapse collapse">
-    <ul class="nav navbar-nav">
-        <li class="active">
-            <a href="#">主页</a>
-        </li>
-        <li>
-            <a href="{% url 'OJ:problemset'%}">Problems</a>
-        </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-    {% if uid != '' %}
-    <li>
-    <a >Welcome {{account}} !</a>
-    </li>
-    <li>
-    <a href = "{% url 'OJ:logout' %}"><span class="glyphicon glyphicon-log-out"></span> 注销</a>
-    </li>
-    {% else %}
-    <li>
-    <a href = "{% url 'OJ:login' %}"><span class="glyphicon glyphicon-log-in"></span> 登录</a>
-    </li>
-    <li>
-        <a href = "{% url 'OJ:register' %}"><span class="glyphicon glyphicon-user"></span> 注册</a>
-    </li>
-        {% endif %}
-    </ul>
-</div>
-</div>   
-</nav>
+{% include "OJ/navbar.html" %}
 
 <div class="container" style="padding:50px;">
-<div class="row">
 
-	<table class="table table-striped col-lg-12">
+<div class="row">
+<h1 class="page-header col-md-12">ProblemSet</h1>
+	<table class="table table-striped">
 	<thead>
 		<tr>
-			<th>ID</th>
-			<th>Title</th>
-			<th>Number</th>
-			<th>ACrate</th>
-			<th>ACrate(origin)</th>
-			<th>Source</th>
+			<th class="col-md-1">ID</th>
+			<th class="col-md-1">Title</th>
+			<th class="col-md-1">Number</th>
+			<th class="col-md-2">ACRate</th>
+			<th class="col-md-2">ACRate(origin)</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -70,22 +32,21 @@
 			<td>{{ problem.id }}</td>
 			<td><a href = "{% url 'OJ:problem' problem.id %}">{{ problem.title }}</a></td>
 			<td>{{ problem.number }}</td>
-			<td>{{ problem.ratio }}%({{ problem.accepted }} / {{ problem.submitted }})</td>
-			<td>{{ problem.ratio_on_oringin }}%({{ problem.accepted_on_oringin }} / {{ problem.submitted_on_oringin }})</td>
-			<td>{{ problem.oj }}</td>
+			<td><div class="progress"><div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ problem.ratio }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ problem.ratio }}%;"><span style="z-index:5;color:BLACK;">{{ problem.ratio }}%</span>
+			</div></div>
+			<td><div class="progress"><div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="{{ problem.ratio }}" aria-valuemin="0" aria-valuemax="100" style="width: {{ problem.ratio_on_oringin }}%;"><span style="z-index:5;color:BLACK;">{{ problem.ratio_on_oringin }}%</span></div></div></td>
 		</tr>
+		<!-- %({{ problem.accepted_on_oringin }} / {{ problem.submitted_on_oringin }})  %({{ problem.accepted }} / {{ problem.submitted }}) -->
 		{% endfor %}
 	</tbody>
 </table>
 </div>
 <div class="row" style="text-align:center">
-<ul class="pagination col-lg-6 col-lg-offset-3">
+<ul class="pagination">
 
 	<li><a href="{% url 'OJ:problemset'%}">&laquo;</a></li>
-	{% if page != 1 %}
 	<li><a href="#">‹</a></li>
-{% endif %}
-	<li><a href="{% url 'OJ:problemset' %}?page={{ page|add:1 }}">{{ page|add:1  }}</a></li>
+<!--	<li><a href="{% url 'OJ:problemset' %}?page={{ page|add:1 }}">{{ page|add:1  }}</a></li>
 	<li><a href="{% url 'OJ:problemset' %}">{{ page|add:2  }}</a></li>
 	<li><a href="{% url 'OJ:problemset'%}">{{ page|add:3  }}</a></li>
 	<li><a href="{% url 'OJ:problemset'%}">{{ page|add:4  }}</a></li>
@@ -94,9 +55,19 @@
 	<li><a href="{% url 'OJ:problemset'%}">{{ page|add:7  }}</a></li>
 	<li><a href="{% url 'OJ:problemset'%}">{{ page|add:8  }}</a></li>
 	<li><a href="{% url 'OJ:problemset'%}">{{ page|add:9  }}</a></li>
-	<li><a href="#">10</a></li>
+	-->
+
+	<li {% if page == pagelist.1 %}class="active"{% endif %} ><a href="{% url 'OJ:problemset' %}?page={{ pagelist.1 }}">{{ pagelist.1  }}</a></li>
+	<li {% if page == pagelist.2 %}class="active"{% endif %}><a href="{% url 'OJ:problemset' %}?page={{ pagelist.2 }}">{{ pagelist.2  }}</a></li>
+	<li {% if page == pagelist.3 %}class="active"{% endif %}><a href="{% url 'OJ:problemset' %}?page={{ pagelist.3 }}">{{ pagelist.3  }}</a></li>
+	<li {% if page == pagelist.4 %}class="active"{% endif %}><a href="{% url 'OJ:problemset' %}?page={{ pagelist.4 }}">{{ pagelist.4  }}</a></li>
+	<li {% if page == pagelist.5 %}class="active"{% endif %}><a href="{% url 'OJ:problemset' %}?page={{ pagelist.5 }}">{{ pagelist.5  }}</a></li>
+	<li {% if page == pagelist.6 %}class="active"{% endif %}><a href="{% url 'OJ:problemset' %}?page={{ pagelist.6 }}">{{ pagelist.6  }}</a></li>
+	<li {% if page == pagelist.7 %}class="active"{% endif %}><a href="{% url 'OJ:problemset' %}?page={{ pagelist.7 }}">{{ pagelist.7  }}</a></li>
+	<li {% if pagelist.8 == '0' %}class="disabled"{%else%}{% if page == pagelist.7 %}class="active"{% endif %}{% endif %}><a href={% if pagelist.8 == '0' %}"#"{%else%}"{% url 'OJ:problemset' %}?page={{ pagelist.8 }}"{% endif %}>{% if pagelist.8 == '0' %}...{%else%}{{ pagelist.8  }}{% endif %}</a></li>
+	<li {% if page == pagelist.9 %}class="active"{% endif %}><a href="{% url 'OJ:problemset' %}?page={{ pagelist.9 }}">{{ pagelist.9  }}</a></li>
 	<li><a href="{% url 'OJ:problemset'%}">›</a></li>
-	<li><a href="{% url 'OJ:problemset'%}">&raquo;</a></li>
+	<li><a href="{% url 'OJ:problemset'%}?page={{ lastpage }}">&raquo;</a></li> 
 </ul>
 
 </div>

@@ -9,11 +9,15 @@
 
         <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     </head>
+<body>
+{% include "OJ/navbar.html" %}
+<div class="container" style="padding-top:50px">
 
-<table>
+<h1 class="page-header col-md-12">Status</h1>
+<table class="table table-striped">
 	<thead>
 		<tr>
-			<th>rid</th>
+			<th>RunId</th>
 			<th>Problem</th>
 			<th>ProblemID</th>
 			<th>Status</th>
@@ -22,7 +26,7 @@
 			<th>Language</th>
 			<th>CodeLength</th>
 			<th>User</th>
-			<th>Subtime</th>
+			<th>Submittime</th>
 		</tr>
 	</thead>
 	<tbody>
@@ -42,5 +46,6 @@
 		{% endfor %}
 	</tbody>
 </table>
-
+</div>
+</body>
 </html>

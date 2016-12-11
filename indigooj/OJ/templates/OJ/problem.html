@@ -1,83 +1,92 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>IndigoOJ</title>
+        <title>{{ problem.title }} - IndigoOJ</title>
 
         <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
 
         <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+        
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.6/ace.js" ></script>
 
         <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script type="text/javascript">
+
+</script>
+
     </head>
 <body>
-        <nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-<div class="container">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Menu</span>
-        <span class="glyphicon glyphicon-th-list"></span>
-    </button>
-    <a class="navbar-brand" href="#">IndigoOJ</a>
-
-</div>
-<div id="navbar" class="navbar-collapse collapse">
-    <ul class="nav navbar-nav">
-        <li class="active">
-            <a href="#">主页</a>
-        </li>
-        <li>
-            <a href="{% url 'OJ:problemset'%}">Problems</a>
-        </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-    {% if uid != '' %}
-    <li>
-    <a >Welcome {{account}} !</a>
-    </li>
-    <li>
-    <a href = "{% url 'OJ:logout' %}"><span class="glyphicon glyphicon-log-out"></span> 注销</a>
-    </li>
-    {% else %}
-    <li>
-    <a href = "{% url 'OJ:login' %}"><span class="glyphicon glyphicon-log-in"></span> 登录</a>
-    </li>
-    <li>
-        <a href = "{% url 'OJ:register' %}"><span class="glyphicon glyphicon-user"></span> 注册</a>
-    </li>
-        {% endif %}
-    </ul>
-</div>
-</div>   
-</nav>
+{% include "OJ/navbar.html" %}
 
 <div class="container" style="padding-top:50px;">
 
-    <p>{{ problem.title }}</p>
-<p>Time Limit:{{ problem.time_limit }}  Memory Limit:{{ problem.mem_limit }}</p>
-<p>detail:</p>
-<pre>{{ problem.detail }}</pre>
-<p>Sample input</p>
-{% autoescape off %}
-<pre>{{ problem.sampleinput}}</pre>
-{% endautoescape %}
-<p>Sample output</p>
-<pre>{{ problem.sampleoutput}}</pre>
-{% if problem.sample != '' %}
-<p>Sample</p>
-<pre>{{ problem.sample }}</pre>
-{% endif %}
+ <div class="page-header">   <h3>{{ problem.title }}</h3>
+ </div>
+<p>Time Limit:<span class="text-info">{{ problem.time_limit }}</span> <br> Memory Limit:{{ problem.mem_limit }} <br> Soucre:{{problem.source}}<br>
+Accepted:<span class="text-info">{{ problem.accepted }}</span> <br>Submitted:<span class="text-info">{{ problem.submitted }}</span> </p>
+<div class="page-header"><h4>Detail</h4></div>
+<div class="container">{{ problem.detail }}</div>
+<div class="page-header"><h4>Sampleinput</h4></div>
+<div class="container">
+    {% autoescape off %}
+<pre class="col-md-8">{{ problem.sampleinput}}</pre>
+    {% endautoescape %}
+</div>
 
-<form action="{% url 'OJ:problem' problem.id %}" method="post">
+<div class="page-header"><h4>Sampleoutput</h4></div>
+<div class="container">
+    {% autoescape off %}
+<pre class="col-md-8">{{ problem.sampleoutput}}</pre>
+    {% endautoescape %}
+</div>
+
+
+<hr>
+
+<form id="codeform" action="{% url 'OJ:problem' problem.id %}" method="post">
     <table>
         {% csrf_token %}
+        
         {{ form }}
+        
     </table>
-    <input type="submit" value="提交" />
+    <div class="row col-md-10" style="min-height:400px;border-color:GRAY;border-width:10px;border-radius: 4px 4px 0 0;">
+        <div class="" id="editor" style="min-height:400px;border-color:GRAY;border-width:10px;border-radius: 4px 4px 0 0;"></div>
+    </div>
+    <div class="row col-md-10" style="">
+        <button id="submit" class="btn btn-primary pull-right" style="margin-top:20px" type="submit" >提交</button>
+    </div>
 </form>
 
-
+<h3 id="test"></h3>
 </div>
 
 </body>
+
+
+<!--<script>
+        $("#code").attr("hidden","true");
+</script>-->
+
+<script type="text/javascript">
+    var editor=ace.edit("editor");
+    editor.setTheme("ace/theme/textmate");
+    editor.getSession().setMode("ace/mode/c_cpp");
+    editor.setAutoScrollEditorIntoView(true);
+    editor.setShowPrintMargin(false);
+    editor.setFontSize(15);
+    $(document).ready(function(){
+        $("#codeform").submit(function() {
+            $("#code").html(editor.getValue());
+        });
+        /*$("#submit").click(function(){
+            $("#code").html(editor.getValue());
+        })*/
+    })
+</script>
+<script type="text/javascript">
+    
+</script>
+
 
 </html>

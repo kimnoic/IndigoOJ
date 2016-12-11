@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head>
+        <title>Contest - IndigoOJ</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+
+        <link href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
+
+        <link href="{% static "OJ/mainstyle.css" %}" rel="stylesheet">
+
+        <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+
+        <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+<body role="document">
+
+{% include "OJ/navbar.html" %}
+
+<header id="contest-header" style="margin-top: 50px;">
+    <div class="container">
+        <div class="contest-intro center-block">
+            <p class="fadeIn animated">Contest</p>
+            <p class="welcome fadeIn animated">在这里磨练诸多技术</p>
+        </div>
+    </div>
+</header>
+
+
+<div class="container" style="font-family: '微软雅黑';" >
+    <div class="row">
+    <h2 class="page-header col-md-12">在线竞赛</h2>
+        <div class="alert alert-info col-md-6">
+        <strong>注意</strong> 
+        <p>请阅读相关说明</p>
+    </div>
+    </div>
+    <div class="row">
+        <h3>竞赛须知：</h3>
+        <ul >
+            <li class="">
+            <p>
+                参加比赛之前需要<b>报名(Assign)</b>，报名之后方可参加竞赛。
+            </p>
+            </li>
+            <li class="">
+            <p>
+                报名在竞赛之前且有<b>截止时间</b>，以服务器时间为准。
+            </p>
+            </li>
+            <li class="">
+            <p>
+                在竞赛开放之后，进入相应的竞赛页面参与竞赛，仅接受Accept得分，其余结果不得分，每题有不同分值，<b>得分最多并且总用时最少者</b>获得胜利。
+            </p>
+            </li>
+            <li class="">
+            <p>
+                竞赛题目从OJ中抽选，只有<b>从此页入口进入做题有效</b>，实时得分排名在竞赛页面查看
+            </p>
+            </li>
+        </ul>
+        
+    </div>
+    <div class="row">
+        <h2 class="page-header col-md-12">竞赛列表</h2>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>AssignLimit</th>
+                    <th>StartTime</th>
+                    <th>EndTime</th>
+                    <th>Operation</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in contestlist %}
+                    <tr>
+                    <td>{{ i.title }}</td>
+                    <td>{{ i.assignlimit|date:"Y-m-d H:i:s" }}</td>
+                    <td>{{ i.starttime|date:"Y-m-d H:i:s" }}</td>
+                    <td>{{ i.endtime|date:"Y-m-d H:i:s" }}</td>
+                    <td><a  class="info">
+                        {% if i.status == "unopen" %}
+                            <button contest="{{i.pk}}" type="button" class="btn btn-default sign">报名</button>
+                        {% elif i.status == "signed" %}
+                            <span class="success">Signed</span>
+                        {% elif i.status == "pending" %}
+                            span class="info">Pending</span>
+                        {% elif i.status == "contesting" %}
+                            <a href="{% url 'OJ:contest' i.pk %}">EnterContest</a>
+                        {% elif i.status == "unsigned" %}
+                            <span class="info">WatchContest</span>
+                        {% else %}
+                            <a href="{% url 'OJ:contest' i.pk %}" class="info">Inspect</a>
+                            <!--<a contest="{{i.pk}}" class="sign" href="{# {% url 'OJ:contestsign' i.pk %} #}">?</a>-->
+                        {% endif %}
+                    </a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+</body>
+<script>
+    $(document).ready(function() {
+        $.ajaxSetup({
+        data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
+    })
+    });
+
+    $(document).ready(function(){
+        $(".sign").click(function(){
+            var pk = $(this).attr('contest');
+            $.ajax({
+                url: '{% url "OJ:contestsign" %}',
+                type: 'POST',
+                dataType: 'html',
+                data: {pk: pk},
+            })
+            .done(function(result) {
+                alert(result);
+            })
+            .fail(function() {
+                alert("报名失败");
+            });
+            $(this).attr("disabled","true")
+        })
+    });
+</script>
+</html>

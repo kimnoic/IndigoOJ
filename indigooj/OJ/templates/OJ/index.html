@@ -37,46 +37,8 @@
     </div>
 </div>
 </nav> -->
-<nav class="navbar navbar-fixed-top navbar-inverse" role="navigation">
-<div class="container">
-  <div class="navbar-header">
-    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-        <span class="sr-only">Menu</span>
-        <span class="glyphicon glyphicon-th-list"></span>
-    </button>
-    <a class="navbar-brand" href="#">IndigoOJ</a>
-
-</div>
-<div id="navbar" class="navbar-collapse collapse">
-    <ul class="nav navbar-nav">
-        <li class="active">
-            <a href="#">主页</a>
-        </li>
-        <li>
-            <a href="{% url 'OJ:problemset'%}">Problems</a>
-        </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right">
-    {% if uid != '' %}
-    <li>
-    <a >Welcome {{account}} !</a>
-    </li>
-    <li>
-    <a href = "{% url 'OJ:logout' %}"><span class="glyphicon glyphicon-log-out"></span> 注销</a>
-    </li>
-    {% else %}
-    <li>
-    <a href = "{% url 'OJ:login' %}"><span class="glyphicon glyphicon-log-in"></span> 登录</a>
-    </li>
-    <li>
-        <a href = "{% url 'OJ:register' %}"><span class="glyphicon glyphicon-user"></span> 注册</a>
-    </li>
-        {% endif %}
-    </ul>
-</div>
-</div>   
-</nav>
-<header style="margin-top: 50px;">
+{% include "OJ/navbar.html" %}
+<header id="index-header" style="margin-top: 50px;">
     <div class="container">
         <div class="intro">
             <p class="fadeInUp animated">欢迎来到IndigoOJ</p>
@@ -93,6 +55,6 @@
 <div class="container" >
     
 </div>
-
+{% include "OJ/bottom.html" %}
 </body>
 </html>
