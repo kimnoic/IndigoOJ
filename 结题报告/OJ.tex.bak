@@ -1,0 +1,189 @@
+\documentclass{beamer}
+\usepackage{CJK}
+\usepackage{float}
+\usepackage{amsmath, amssymb}
+\usepackage[palatino,gill,courier]{altfont}
+\usepackage[latin1]{inputenc}
+\usepackage{multicol}
+\usetheme{Warsaw}
+
+\setbeamertemplate{itemize items}{$\bullet$}
+
+\begin{document}
+\begin{CJK*}{GBK}{song}
+
+    \title[第二轮迭代报告\ Online Judge]{软件工程大项目}
+    \author{张韬庚、金卓林、邱晨晔}
+    \institute{哈尔滨工业大学}
+    \date{\today}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{题目}
+    自选题目：Online Judge系统 \\[1\baselineskip]
+
+    项目Github地址：https://github.com/kimnoic/IndigoOJ \\[1\baselineskip]
+\end{frame}
+
+\begin{frame}{基本背景}
+    \begin{itemize}
+        \item Online Judge是在线评测程序的系统，可以编译并运行用户的提交的代码，并用事先构建好的用例去测试，同时会有诸多的运行限制，可以用于程序设计竞赛的评判与练习。
+        \item Online Judge系统专用于程序设计竞赛活动和培训，并能够用于编程教学的作业提交等，具有准确、高效的特点。
+        \item 主要为编程竞赛的爱好者、参赛队员以及有意训练程序设计的学生群体。
+    \end{itemize}
+\end{frame}
+
+
+\begin{frame}{功能清单 \ ①}
+    \textbf {提交代码与判题功能} :
+    \begin{itemize}
+        \item 能够选择代码对应的语言，编译环境
+        \item 能够在不同题目下提交代码并返回相应的判题信息
+        \item 能够查看运行状态记录
+    \end{itemize}
+    \textbf {账户注册、登录以及信息管理功能}
+    \begin{itemize}
+        \item 能够提供基本的账户注册登录以及资料的储存和修改
+        \item 能够储存用户的做题记录以及判题状态
+        \item 多种扩展如通过率、通过总数等
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{功能清单 \ ②}
+        \textbf {试题管理系统}：
+        \begin{itemize}
+            \item 题目清单
+            \item 题目的详细信息，如时间要求、内存要求等
+            \item 可以编写代码的文本框和提交框
+        \end{itemize}
+        \textbf {在线竞赛系统}：
+        \begin{itemize}
+            \item 可以进行在线比赛，题目来自OJ中
+            \item 参加比赛前需要报名，有截止时间
+            \item 每题有不同分值，参与者能看到自己得到的分数
+        \end{itemize}
+\end{frame}
+
+\begin{frame}{系统的体系机构构思}
+    \includegraphics[height=200px]{1.png}\\[1\baselineskip]
+\end{frame}
+
+\begin{frame}{系统开发技术}
+    \textbf {编程语言}
+    \begin{itemize}
+        \item JavaScript、Html、CSS
+        \item Python、Java、Ruby
+    \end{itemize}
+    \textbf {开发环境}
+    \begin{itemize}
+        \item IDLE、pycharm、FireBug
+    \end{itemize}
+    \textbf {运行环境}
+    \begin{itemize}
+        \item Server OS：Windows
+        \item Browser：Firefox、Internet Explorer、Chrome
+    \end{itemize}
+\end{frame}
+
+\begin{frame}{功能实现}
+    接下来以截图 + 备注的形式说明已完成的功能
+\end{frame}
+
+\begin{frame}{注册+登录 \ ①}
+    \includegraphics[height=150px]{2.png}\\[1\baselineskip]
+    注册界面
+\end{frame}
+
+\begin{frame}{注册+登录 \ ②}
+    \includegraphics[height=150px]{3.png}\\[1\baselineskip]
+    填完信息后点Submit即可
+\end{frame}
+
+\begin{frame}{注册+登录 \ ③}
+    \includegraphics[height=150px]{15.png}\\[1\baselineskip]
+    登录界面
+\end{frame}
+
+\begin{frame}{主页}
+    \includegraphics[height=150px]{4.jpg}\\[1\baselineskip]
+    欢迎来到主页，上方有几个栏目可以选择，分别是主页、题库、提交记录、在线比赛、自己的提交记录。\\[1\baselineskip]
+    也可以选择“遁去做题”来开始刷题！
+\end{frame}
+
+\begin{frame}{题目列表 \ ①}
+    \includegraphics[height=150px]{5.png}\\[1\baselineskip]
+    题目列表的第一页，我们可以通过点击进入每道题，同时可以在题目列表页可以看到题目的通过率，来判断这道题目的难易程度。
+\end{frame}
+
+\begin{frame}{题目列表 \ ②}
+    \includegraphics[height=150px]{12.png}\\[1\baselineskip]
+    随机的一页题目列表
+\end{frame}
+
+\begin{frame}{题目信息 \ ①}
+    \includegraphics[height=150px]{6.png}\\[1\baselineskip]
+    通过点击题目后，我们随机打开一道题目\\[1\baselineskip]
+    可以看到时限要求、内存要求、题目来源、题干信息、样例的输入
+\end{frame}
+
+\begin{frame}{题目信息 \ ②}
+    \includegraphics[height=150px]{7.png}\\[1\baselineskip]
+    在题目信息下半页里我们可以在线编写代码，是有缩进的，编写成功后提交。
+\end{frame}
+
+\begin{frame}{提交信息 \ ①}
+    \includegraphics[height=150px]{8.png}\\[1\baselineskip]
+    经过短暂时间的等待，我们可以看到这道题目的评测结果
+\end{frame}
+
+\begin{frame}{提交信息 \ ②}
+    \includegraphics[height=150px]{9.png}\\[1\baselineskip]
+    我们可以通过点击上面的个人提交记录来查看个人的提交结果，包括所用时间、内存、代码长度、提交时间等
+\end{frame}
+
+\begin{frame}{在线比赛 \ ①}
+    \includegraphics[height=150px]{10.jpg}\\[1\baselineskip]
+    点击contest我们可以来到比赛的主页
+\end{frame}
+
+\begin{frame}{在线比赛 \ ②}
+    \includegraphics[height=150px]{11.png}\\[1\baselineskip]
+    报名比赛成功之后，会有提示消息
+\end{frame}
+
+\begin{frame}{在线比赛 \ ③}
+    \includegraphics[height=150px]{13.png}\\[1\baselineskip]
+    竞赛详情
+\end{frame}
+
+\begin{frame}{在线比赛 \ ④}
+    \includegraphics[height=150px]{14.png}\\[1\baselineskip]
+    得分情况
+\end{frame}
+
+\begin{frame}{总结 \ 张韬庚}
+    本次项目实践最终基本完成了预期的目标，实现了预定的功能部分。对于OJ系统的基本业务逻辑有了具体的实现。
+    项目开发在最初敲定使用django框架在python环境下开发，是考虑到python作为解释语言的灵活性以及丰富的lib。实际开发中也确实体会到了django框架在搭建应用时的灵活敏捷，确实大大加快了开发的速度。
+    在最初的时候其实对OnlineJudge的Contest有所忽略，以至于在最后才发现Contest模块是一个基本的OJ中最复杂最综合最难做的部分。
+    在做的过程中参考了国内外的著名OJ，因此在这个OJ系统从风格到业务逻辑都有其他OJ的影子
+    应用采用MVC的模式，在django对应model——sqlite，view——内嵌预处理语句的template模板，controller——views中的方法
+    尝试应用了AJAX，在最后开发的Contest的报名部分
+    最后的版本相比最初的预期，感觉仍有很多未完成的地方，这一点比较遗憾。在这之后会进行后续开发的。
+\end{frame}
+
+\begin{frame}{总结 \ 金卓林}
+    大一大二的时候一直在Oj上刷题，一直以来也想自己做一个OJ，现在终于完成了这个小目标！\\[1\baselineskip]
+    开始的时候还不知道从哪儿下手，参考了俄罗斯著名OJ Codeforces和窝工的OJ，大家先去研究了几天django 和爬虫的相关知识，之后稍微有了点思路。开始爬虫的时候，总是遇到各种问题，每次抓的结果不是很准确，原因是HOJ上的题目信息来源并不准确，大部分的题目题干信息在统一的位置，少部分分散。进过继续学习爬虫的相关知识，才抓到了较为准确的结果。\\[1\baselineskip]
+    编写后台的时候也是出现了各种bug，有的时候很头疼，在经过查阅文档，反复试验之后才能解决，提高了英文阅读能力？:)  和调试bug的能力。不过利用django来编写确实方面了很多，以后还有继续学习python这个语言，现在感觉这个语言十分强大。\\ [1\baselineskip]
+    通过这次Online Judge的项目，从各个方面都有提高，也在与队友们Github上的合作愉快，总之是一次快乐的成长。
+\end{frame}
+
+\begin{frame}{总结 \ 邱晨晔}
+    这学期的软件工程项目是我第一次使用软件工程的方法和别人合作编写项目。通过这次项目，我更好的理解了软件工程是一套用于软件的团队开发，以提高软件质量和程序员工作效率为目的的规范。其核心就是，对于软件开发的5个重要组成部分：需求分析，设计，编码，调试，维护，如何组织这5个部分的工作，以及如何完成每一个工作。此外，这次项目和以往的实验很大的不同在于它是面向用户的，除了完成基本的功能，还需要尽力做到对用户友好，在界面美化设计等方面要求比较高。
+\end{frame}
+
+
+\end{CJK*}
+\end{document}
